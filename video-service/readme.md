@@ -105,7 +105,7 @@ ___
 * [Visual Studio Code](https://code.visualstudio.com/) (optional)
   * [Python Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
   * [GitHub Repositories](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub) -- Or some other git extension
-  * [Kite Autocomplete Plugin for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=kiteco.kite) -- Auto code complete for python.  Similar to Code Pilot.
+  * [Kite Autocomplete Plugin for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=kiteco.kite) -- Auto code complete for python.  Similar to GitHub copilot.
   * [Markdown Support for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
   * [Visual Studio Code Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
     * Remote SSH
