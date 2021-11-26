@@ -1,5 +1,9 @@
-import vlc
+# pylint: disable=broad-except
+'''
+Micro-service for VLC.
+'''
 import os
+import vlc
 from flask import Flask
 from flask import json
 from flask import request
@@ -8,8 +12,11 @@ from flask import request
 app = Flask(__name__)
 
 def error_response(path, message, status_code):
+    '''
+    Return a JSON response with an error message.
+    '''
     response = json.dumps({'path': path, 'error': message})
-    return response, status_code  
+    return response, status_code
 
 
 @app.route('/api/v1/play', methods=['POST'])
@@ -30,38 +37,37 @@ def play():
         media_player.set_fullscreen(True)
         media_player.play()
         return ('',200)
-    except Exception as e:
-        return error_response(request.path, e.args[1], 500)
+    except Exception as ex:
+        return error_response(request.path, ex.args[1], 500)
 
 
 @app.route('/api/v1/stop', methods=['POST'])
 def stop():
     '''
     Stop the media player.
-    '''    
+    '''
     try:
         media_player.stop()
         return '',200
-    except Exception as e:
-        return error_response(request.path,  e.args[1], 500)
+    except Exception as ex:
+        return error_response(request.path,  ex.args[1], 500)
 
 
 @app.route('/api/v1/list', methods=['GET'])
-def list():
+def list_media():
     '''
     List all available media files.
     '''
     try:
         dir_list = os.listdir('media')
-            
         resp = app.response_class(
             response=json.dumps(dir_list),
             status=200,
             mimetype='application/json'
         )
         return resp
-    except Exception as e:
-        return error_response(request.path,  e.args[1], 500)
+    except Exception as ex:
+        return error_response(request.path,  ex.args[1], 500)
 
 
 @app.route('/api/v1/status', methods=['GET'])
@@ -78,7 +84,7 @@ def status():
             state = 'Playing'
         elif state_value == vlc.State.Paused:
             state = 'Paused'
-        elif state_value == vlc.State.Stopped:  
+        elif state_value == vlc.State.Stopped:
             state = 'Stopped'
         elif state_value == vlc.State.Error:
             state = 'Error'
@@ -96,11 +102,11 @@ def status():
             mimetype='application/json'
         )
         return resp
-    except Exception as e:
-        return error_response(request.path,  e.args[1], 500)
+    except Exception as ex:
+        return error_response(request.path,  ex.args[1], 500)
 
 # creating vlc media player object
-vlcInstance = vlc.Instance() 
+vlcInstance = vlc.Instance()
 
 # don't run on top when debugging
 #vlcInstane = vlc.Instance('--video-on-top')

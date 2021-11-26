@@ -83,7 +83,7 @@ ___
 
 # Running
 ```
-python vlc-service.py
+python vlc_service.py
 ```
 **Note:** Assumes the required modules have been installed. (VLC, pip modules).  Also, if using venv, then the virtual environment should be start prior to running.
 
