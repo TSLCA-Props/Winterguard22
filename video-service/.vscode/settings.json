@@ -4,5 +4,6 @@
         "banksy",
         "testvid",
         "tslc"
-    ]
+    ],
+    "python.linting.pylintEnabled": true
 }
