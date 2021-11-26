@@ -38,7 +38,7 @@ def play():
         media_player.play()
         return ('',200)
     except Exception as ex:
-        return error_response(request.path, ex.args[1], 500)
+        return error_response(request.path, str(ex), 500)
 
 
 @app.route('/api/v1/stop', methods=['POST'])
@@ -50,7 +50,7 @@ def stop():
         media_player.stop()
         return '',200
     except Exception as ex:
-        return error_response(request.path,  ex.args[1], 500)
+        return error_response(request.path,  str(ex), 500)
 
 
 @app.route('/api/v1/list', methods=['GET'])
@@ -67,7 +67,7 @@ def list_media():
         )
         return resp
     except Exception as ex:
-        return error_response(request.path,  ex.args[1], 500)
+        return error_response(request.path,  str(ex), 500)
 
 
 @app.route('/api/v1/status', methods=['GET'])
@@ -95,7 +95,11 @@ def status():
         elif state_value == vlc.State.NothingSpecial:
             state = 'NothingSpecial'
 
-        file = media_player.get_media().get_mrl()
+        load_media = media_player.get_media()
+        if load_media is None:
+            file = "No file selected"
+        else:
+            file = load_media.get_mrl()
         resp = app.response_class(
             response=json.dumps({'state': state, 'file': file}),
             status=200,
@@ -103,7 +107,7 @@ def status():
         )
         return resp
     except Exception as ex:
-        return error_response(request.path,  ex.args[1], 500)
+        return error_response(request.path,  str(ex), 500)
 
 # creating vlc media player object
 vlcInstance = vlc.Instance()
