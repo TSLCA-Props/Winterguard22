@@ -53,7 +53,7 @@ ___
 
 ___
 ### Status
-`POST /api/v1/status`
+`GET /api/v1/status`
 
 Return the current VLC status
 
