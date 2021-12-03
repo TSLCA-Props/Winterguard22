@@ -2,8 +2,11 @@
     "python.linting.enabled": true,
     "cSpell.words": [
         "banksy",
+        "libvlc",
         "testvid",
-        "tslc"
+        "tslc",
+        "Vetinari",
+        "Winterguard"
     ],
     "python.linting.pylintEnabled": true
 }

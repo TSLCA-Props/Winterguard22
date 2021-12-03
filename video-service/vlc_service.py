@@ -2,7 +2,10 @@
 '''
 Micro-service for VLC.
 '''
+from datetime import datetime
+from datetime import timedelta
 import os
+from platform import platform
 import vlc
 from flask import Flask
 from flask import json
@@ -10,6 +13,8 @@ from flask import request
 
 
 app = Flask(__name__)
+
+VERSION='1.0.0'
 
 def error_response(path, message, status_code):
     '''
@@ -27,11 +32,11 @@ def play():
     try:
         media_file_arg =  request.args.get('file')
         if media_file_arg is None:
-            return error_response('/api/v1/play', 'No file name provided', 400)
+            return error_response(request.path, 'No file name provided', 400)
 
         media_file_name = os.path.join('media', media_file_arg)
         if not os.path.isfile(media_file_name):
-            return error_response('/api/v1/play', 'File does not exist ' + media_file_name, 400)
+            return error_response(request.path, 'File does not exist ' + media_file_name, 400)
 
         media_player.set_media(vlcInstance.media_new(media_file_name))
         media_player.set_fullscreen(True)
@@ -39,6 +44,59 @@ def play():
         return ('',200)
     except Exception as ex:
         return error_response(request.path, str(ex), 500)
+
+
+@app.route('/api/v1/position', methods=['POST'])
+def position():
+    '''
+    Play a media file at a specific position.
+    '''
+    try:
+        position_arg =  request.args.get('percent')
+        timedelta_arg = request.args.get('time')
+        if position_arg is None and timedelta_arg is None:
+            return error_response(request.path, 'No Position or time provided', 400)
+
+
+        if (media_player.get_state() == vlc.State.Ended or
+             media_player.get_state() == vlc.State.Stopped):
+            media_player.set_media(media_player.get_media())
+            media_player.play()
+
+        position_value = 0.0
+        if timedelta_arg is not None:
+            time_d = datetime.strptime(timedelta_arg,"%H:%M:%S.%f")
+            time_position = timedelta(  hours=time_d.hour,
+                                        minutes=time_d.minute,
+                                        seconds=time_d.second,
+                                        microseconds=time_d.microsecond).total_seconds() * 1000
+            if time_position > media_player.get_length():
+                return error_response(request.path, 'Time provided greater than media length', 400)
+            position_value = time_position / media_player.get_length()
+        elif position_arg is not None:
+            position_value = float(position_arg)
+            if (position_value < 0.0) or (position_value > 1.0):
+                return error_response(request.path, 'Position must be between 0 and 1.00', 400)
+
+        media_player.set_position(position_value)
+        if media_player.get_state() == vlc.State.Paused:
+            media_player.pause()
+
+        return ('',200)
+    except Exception as ex:
+        return error_response(request.path, str(ex), 500)
+
+@app.route('/api/v1/pause', methods=['POST'])
+def pause_resume():
+    '''
+    Pause the media file. Resume if already paused.
+    '''
+    try:
+        media_player.pause()
+        return ('',200)
+    except Exception as ex:
+        return error_response(request.path, str(ex), 500)
+
 
 
 @app.route('/api/v1/stop', methods=['POST'])
@@ -97,11 +155,27 @@ def status():
 
         load_media = media_player.get_media()
         if load_media is None:
-            file = "No file selected"
+            file = 'No file selected'
+            current_position = 0.0
+            time_position = "00:00:00.000"
+            media_length = '0:00:00'
         else:
             file = load_media.get_mrl()
+            current_position = media_player.get_position()
+            time_position = str(timedelta(milliseconds=media_player.get_time()))
+            media_length = str(timedelta(milliseconds=media_player.get_length()))
+
         resp = app.response_class(
-            response=json.dumps({'state': state, 'file': file}),
+            response=json.dumps(
+                {   'server_version': VERSION,
+                    'vlc_version': str(vlc.libvlc_get_version()),
+                    'os_version': str(platform()),
+                    'state': state,
+                    'file': file,
+                    'position_percent:': current_position,
+                    'position_time': time_position,
+                    'length' : media_length
+                }),
             status=200,
             mimetype='application/json'
         )

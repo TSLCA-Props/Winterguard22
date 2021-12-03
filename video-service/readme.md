@@ -19,6 +19,32 @@ Response:
 * 200 on success
 * otherwise error code with description in the body
 ___
+___
+### Position
+`POST /api/v1/position?time=HH:MM:SS.ss`
+
+`POST /api/v1/position?percent=0.XX`
+
+
+Position the media player the specific time or percent of video. The player will be restarted if at end, paused to stopped.  
+
+*Note:* time must be in the exact format.
+An error will occur if the .ss is missing.
+
+Response:
+* 200 on success
+* otherwise error code with description in the body
+___
+___
+### Pause
+`POST /api/v1/pause`
+
+Pause a playing video, resume if paused.
+
+Response:
+* 200 on success
+* otherwise error code with description in the body
+___
 
 ___
 ### Stop
@@ -61,10 +87,15 @@ Response:
 * 200 on success
   * Json body
 ```
-{
-  "file": "file:///C:/git-repo/tslc/video-server/media/testvid.mov",
-  "state": "Playing"
-}  
+    "file": "file:///C:/git-repo/tslc/Winterguard22/video-service/media/testvid.mov",
+    "length": "0:01:50",
+    "os_version": "Windows-10-10.0.19042-SP0",
+    "position_percent:": 0.24228182435035706,
+    "position_time": "0:00:26.651000",
+    "server_version": "1.0.0",
+    "state": "Playing",
+    "vlc_version": "b'3.0.16 Vetinari'"
+}
 ```
 
   * state value
@@ -95,8 +126,20 @@ python vlc_service.py
 	* [flask](https://pypi.org/project/Flask/)
 	* [waitress](https://pypi.org/project/waitress/)
 
+
+___
+Python3 id required to run.  This can be done using the commons
+* `python3`
+* `pip3` OR `python3 -m pip`  to install modules.
+* VirtualEvn can be setup to localize modules
+  * `python3 -m venv venv`    to Setup of the virtual directory
+  * Linux
+    * `source venv/bin/activate`  to activate the virtual environment
+  * Windows
+    * `venv\Scripts\activate` to activate the virtual environment
 ___
   **Note:** python modules should be installed using venv.  They can be put in the global modules, but versioning issue can occur in the future.
+
 ___
 * [VLC](https://www.videolan.org/) (VideoLAN Organization)
   * [Linux install](https://www.videolan.org/vlc/download-debian.html) -  `sudo apt install vlc` 

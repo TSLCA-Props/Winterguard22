@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "14f79e75-2096-40de-a1c3-39b9fa551bd3",
+		"_postman_id": "2861de7a-d63c-40eb-b7f4-5c6f489dd3d7",
 		"name": "vlc-service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -46,6 +46,126 @@
 			"response": []
 		},
 		{
+			"name": "Set Position time",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/position?time=00:00:30.0",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"position"
+					],
+					"query": [
+						{
+							"key": "time",
+							"value": "00:00:30.0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Position percent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/position?percent=0.5",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"position"
+					],
+					"query": [
+						{
+							"key": "percent",
+							"value": "0.5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Pause",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/position?percent=0.5",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"position"
+					],
+					"query": [
+						{
+							"key": "percent",
+							"value": "0.5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Stop VLC",
 			"event": [
 				{
@@ -74,44 +194,6 @@
 						"api",
 						"v1",
 						"stop"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "List media files",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Array has more zero values\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.greaterThan(0);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{host}}:5000/api/v1/list",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"list"
 					]
 				}
 			},
@@ -157,6 +239,124 @@
 						"api",
 						"v1",
 						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List media files",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Array has more zero values\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.greaterThan(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/list",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play banksy001.gif",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/play?file=banksy001.gif",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"play"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "banksy001.gif"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play banksy022.jpg",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/play?file=banksy022.jpg",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"play"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "banksy022.jpg"
+						}
 					]
 				}
 			},
