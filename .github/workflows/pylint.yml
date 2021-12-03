@@ -20,5 +20,5 @@ jobs:
         pip install pylint python-vlc flask waitress
     - name: Analysing the code with pylint
       run: |
-        cd vision_service
+        cd video_service
         pylint `ls -R|grep .py$|xargs`
