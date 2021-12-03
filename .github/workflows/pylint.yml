@@ -20,4 +20,4 @@ jobs:
         pip install pylint python-vlc flask waitress
     - name: Analysing the code with pylint
       run: |
-        pylint `$(find . -name "*.py" | xargs)`
+        pylint $(find . -name "*.py" | xargs)
