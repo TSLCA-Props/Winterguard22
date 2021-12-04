@@ -6,6 +6,8 @@ from datetime import datetime
 from datetime import timedelta
 import os
 from platform import platform
+import tkinter as tk
+from threading import Thread
 import vlc
 from flask import Flask
 from flask import json
@@ -15,6 +17,17 @@ from flask import request
 app = Flask(__name__)
 
 VERSION='1.0.0'
+
+class WaitressThread(Thread):
+
+    def __init__(self):
+        super(WaitressThread, self).__init__()
+        self.daemon = True
+
+    def run(self):
+        from waitress import serve
+        serve(app, host='0.0.0.0', port=5000)
+
 
 def error_response(path, message, status_code):
     '''
@@ -167,7 +180,8 @@ def status():
 
         resp = app.response_class(
             response=json.dumps(
-                {   'server_version': VERSION,
+                {   
+                    'server_version': VERSION,
                     'vlc_version': str(vlc.libvlc_get_version()),
                     'os_version': str(platform()),
                     'state': state,
@@ -190,8 +204,24 @@ vlcInstance = vlc.Instance()
 #vlcInstane = vlc.Instance('--video-on-top')
 
 media_player = vlcInstance.media_player_new()
+
+# TK stuff for windows
+tkRoot = tk.Tk()
+tkRoot.configure(bg='black')
+tkRoot.wm_attributes('-fullscreen','true')
+
+media_player.set_xwindow(tkRoot.winfo_id())
+
 media_player.toggle_fullscreen()
 
 if __name__ == '__main__':
-    from waitress import serve
-    serve(app, host='0.0.0.0', port=5000)
+    # from waitress import serve
+    # serve(app, host='0.0.0.0', port=5000)
+
+    # Run waitress in it own thread so TK can be in the main
+    waitressThread = WaitressThread()
+    waitressThread.start()
+
+    tkRoot.mainloop()
+
+
