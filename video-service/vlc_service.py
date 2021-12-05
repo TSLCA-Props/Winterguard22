@@ -184,7 +184,7 @@ def status():
 
         resp = app.response_class(
             response=json.dumps(
-                {   
+                {
                     'server_version': VERSION,
                     'vlc_version': str(vlc.libvlc_get_version()),
                     'os_version': str(platform.platform()),
