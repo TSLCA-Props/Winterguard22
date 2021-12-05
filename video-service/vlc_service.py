@@ -17,7 +17,7 @@ from waitress import serve
 
 app = Flask(__name__)
 
-VERSION='1.0.1'
+VERSION='1.0.2'
 SERVICE_PORT=5000
 
 class WaitressThread(Thread):
@@ -88,9 +88,10 @@ def position():
                                         minutes=time_d.minute,
                                         seconds=time_d.second,
                                         microseconds=time_d.microsecond).total_seconds() * 1000
-            if time_position > media_player.get_length():
+            media_length = media_player.get_media().get_duration()
+            if time_position > media_length:
                 return error_response(request.path, 'Time provided greater than media length', 400)
-            position_value = time_position / media_player.get_length()
+            position_value = time_position / media_length
         elif position_arg is not None:
             position_value = float(position_arg)
             if (position_value < 0.0) or (position_value > 1.0):
@@ -181,7 +182,7 @@ def status():
             file = load_media.get_mrl()
             current_position = media_player.get_position()
             time_position = str(timedelta(milliseconds=media_player.get_time()))
-            media_length = str(timedelta(milliseconds=media_player.get_length()))
+            media_length = str(timedelta(milliseconds=media_player.get_media().get_duration()))
 
         resp = app.response_class(
             response=json.dumps(

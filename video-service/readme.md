@@ -1,30 +1,40 @@
 # VLC service
+
 The video service is a rest api micro-service wrapping the VLC media player.
 
 ## Service port
-**5000**
+
+* **5000**
 
 example:
-```
+
+```http
 http://xxx.xxx.xxx.xxx:5000/api/v1/list
 ```
+
 ## API
+
 ___
+
 ### Play
+
 `POST /api/v1/play?file=[media file name]`
 
 Play a media file in VLC. Use the `list` api to see a list of media files on the server.
 
 Response:
+
 * 200 on success
 * otherwise error code with description in the body
+
 ___
 ___
+
 ### Position
+
 `POST /api/v1/position?time=HH:MM:SS.ss`
 
 `POST /api/v1/position?percent=0.XX`
-
 
 Position the media player the specific time or percent of video. The player will be restarted if at end, paused to stopped.  
 
@@ -32,41 +42,55 @@ Position the media player the specific time or percent of video. The player will
 An error will occur if the .ss is missing.
 
 Response:
+
 * 200 on success
 * otherwise error code with description in the body
+
 ___
 ___
+
 ### Pause
+
 `POST /api/v1/pause`
 
 Pause a playing video, resume if paused.
 
 Response:
+
 * 200 on success
 * otherwise error code with description in the body
+
 ___
 
 ___
+
 ### Stop
+
 `POST /api/v1/stop`
 
 Stop the current media file in VLC.
 
 Response:
+
 * 200 on success
 * otherwise error code with description in the body
+
 ___
 
 ___
+
 ### List
+
 `GET /api/v1/list`
 
 Return an array of media file names available on the server.
 
 Response:
+
 * 200 on success
   * Json body (Just an array of strings)
-  ```
+
+  ```json
   [
     "banksy001.gif",
     "banksy002.gif",
@@ -74,19 +98,25 @@ Response:
     "testvid.mov"
   ]
   ```
+
 * otherwise error code with description in the body
+
 ___
 
 ___
+
 ### Status
+
 `GET /api/v1/status`
 
 Return the current VLC status
 
 Response:
+
 * 200 on success
   * Json body
-```
+
+```json
 {
     "file": "file:///C:/git-repo/tslc/Winterguard22/video-service/media/testvid.mov",
     "length": "0:01:50",
@@ -100,51 +130,55 @@ Response:
 }
 ```
 
-  * state value
-    * 'NothingSpecial',
-    * 'Opening',
-    * 'Buffering',
-    * 'Playing',
-    * 'Paused',
-    * 'Stopped',
-    * 'Ended',
-    * 'Error'
+* state value
+  * 'NothingSpecial',
+  * 'Opening',
+  * 'Buffering',
+  * 'Playing',
+  * 'Paused',
+  * 'Stopped',
+  * 'Ended',
+  * 'Error'
 
 * otherwise error code with description in the body
+
+___
 ___
 
+## Running
 
-# Running
-```
+```bash
 python vlc_service.py
 ```
+
 **Note:** Assumes the required modules have been installed. (VLC, pip modules).  Also, if using venv, then the virtual environment should be start prior to running.
 
+___
+___
 
-# Requirements
+## Requirements
+
 * [Python](https://www.python.org/downloads/) 3.7 and above
 * Pip Modules
-	* [python-vlc](https://pypi.org/project/python-vlc/)
-	* [flask](https://pypi.org/project/Flask/)
-	* [waitress](https://pypi.org/project/waitress/)
+  * [python-vlc](https://pypi.org/project/python-vlc/)
+  * [flask](https://pypi.org/project/Flask/)
+  * [waitress](https://pypi.org/project/waitress/)
 
+> Python3 is required to run.  This can be done using the commands
+>
+> * `python3`
+> * `pip3` OR `python3 -m pip`  to install modules.
+> * VirtualEvn can be setup to localize modules
+>   * `python3 -m venv venv` <br> to Setup of the virtual directory
+>   * Linux
+>     * `source venv/bin/activate` <br> to activate the virtual > environment
+>   * Windows
+>     * `venv\Scripts\activate` <br> to activate the virtual environment
+>
+>   **Note:** python modules should be installed using venv.  They can be put in the global modules, but versioning issue can occur in the future.
 
-___
-Python3 is required to run.  This can be done using the commands
-* `python3`
-* `pip3` OR `python3 -m pip`  to install modules.
-* VirtualEvn can be setup to localize modules
-  * `python3 -m venv venv`    to Setup of the virtual directory
-  * Linux
-    * `source venv/bin/activate`  to activate the virtual environment
-  * Windows
-    * `venv\Scripts\activate` to activate the virtual environment
-___
-  **Note:** python modules should be installed using venv.  They can be put in the global modules, but versioning issue can occur in the future.
-
-___
 * [VLC](https://www.videolan.org/) (VideoLAN Organization)
-  * [Linux install](https://www.videolan.org/vlc/download-debian.html) -  `sudo apt install vlc` 
+  * [Linux install](https://www.videolan.org/vlc/download-debian.html) -  `sudo apt install vlc`
   * [Windows Install](https://www.videolan.org/vlc/download-windows.html) - download installer
 
 * [Visual Studio Code](https://code.visualstudio.com/) (optional)
@@ -157,4 +191,3 @@ ___
     * Remote WSL
     * Remote Editing
 * [Postman](https://www.postman.com/) - Rest API tool (optional)
-	
