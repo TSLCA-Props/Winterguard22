@@ -215,7 +215,10 @@ tkRoot = tk.Tk()
 tkRoot.configure(bg='black')
 tkRoot.wm_attributes('-fullscreen','true')
 
-media_player.set_xwindow(tkRoot.winfo_id())
+if platform.system() == 'Linux':
+    media_player.set_xwindow(tkRoot.winfo_id())
+elif platform.system() == 'Windows':
+    media_player.set_hwnd(tkRoot.winfo_id())
 
 media_player.toggle_fullscreen()
 
