@@ -5,13 +5,14 @@ Micro-service for VLC.
 from datetime import datetime
 from datetime import timedelta
 import os
-from platform import platform
+import  platform
 import tkinter as tk
 from threading import Thread
 import vlc
 from flask import Flask
 from flask import json
 from flask import request
+from waitress import serve
 
 
 app = Flask(__name__)
@@ -19,13 +20,16 @@ app = Flask(__name__)
 VERSION='1.0.0'
 
 class WaitressThread(Thread):
+    '''
+    Thread class for waitress
+    '''
 
     def __init__(self):
-        super(WaitressThread, self).__init__()
+        super().__init__()
+        # Make daemon so system run forever
         self.daemon = True
 
     def run(self):
-        from waitress import serve
         serve(app, host='0.0.0.0', port=5000)
 
 
@@ -183,7 +187,8 @@ def status():
                 {   
                     'server_version': VERSION,
                     'vlc_version': str(vlc.libvlc_get_version()),
-                    'os_version': str(platform()),
+                    'os_version': str(platform.platform()),
+                    'os': platform.system(),
                     'state': state,
                     'file': file,
                     'position_percent:': current_position,
@@ -215,13 +220,8 @@ media_player.set_xwindow(tkRoot.winfo_id())
 media_player.toggle_fullscreen()
 
 if __name__ == '__main__':
-    # from waitress import serve
-    # serve(app, host='0.0.0.0', port=5000)
-
     # Run waitress in it own thread so TK can be in the main
     waitressThread = WaitressThread()
     waitressThread.start()
 
     tkRoot.mainloop()
-
-
