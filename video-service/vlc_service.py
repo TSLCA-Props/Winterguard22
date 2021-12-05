@@ -12,12 +12,13 @@ import vlc
 from flask import Flask
 from flask import json
 from flask import request
+from flask import make_response
 from waitress import serve
 
 
 app = Flask(__name__)
 
-VERSION='1.0.2'
+VERSION='1.0.3'
 SERVICE_PORT=5000
 
 class WaitressThread(Thread):
@@ -38,8 +39,7 @@ def error_response(path, message, status_code):
     '''
     Return a JSON response with an error message.
     '''
-    response = json.dumps({'path': path, 'error': message})
-    return response, status_code
+    return make_response({'path': path, 'error': message}, status_code)
 
 
 @app.route('/api/v1/play', methods=['POST'])

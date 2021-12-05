@@ -104,7 +104,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{host}}:5000/api/v1/position?percent=0.5",
+					"raw": "http://{{host}}:5000/api/v1/position?percent=0.90",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -118,7 +118,7 @@
 					"query": [
 						{
 							"key": "percent",
-							"value": "0.5"
+							"value": "0.90"
 						}
 					]
 				}
@@ -356,6 +356,422 @@
 						{
 							"key": "file",
 							"value": "banksy022.jpg"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play failure -- wrong parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"No file name provided\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/play');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/play?media=xxxxxx",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"play"
+					],
+					"query": [
+						{
+							"key": "media",
+							"value": "xxxxxx"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play failure -- no parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"No file name provided\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/play');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/play",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"play"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play failure -- missing media",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"File does not exist media\\\\xxxxx\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/play');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/play?file=xxxxx",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"play"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "xxxxx"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Position failure-- no parameters",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"No Position or time provided\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/position');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/position",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"position"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Position failure-- time bad format",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"time data '01.02' does not match format '%H:%M:%S.%f'\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/position');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": ":5000/api/v1/position?time=01.02",
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"position"
+					],
+					"query": [
+						{
+							"key": "time",
+							"value": "01.02"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Position failure-- time longer than media",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"Time provided greater than media length\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/position');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/position?time=23:59:59.9",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"position"
+					],
+					"query": [
+						{
+							"key": "time",
+							"value": "23:59:59.9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Position failure-- position > 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"Position must be between 0 and 1.00\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/position');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/position?percent=1.1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"position"
+					],
+					"query": [
+						{
+							"key": "percent",
+							"value": "1.1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Position failure-- position < 0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"Position must be between 0 and 1.00\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/position');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/position?percent=-0.1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"position"
+					],
+					"query": [
+						{
+							"key": "percent",
+							"value": "-0.1"
 						}
 					]
 				}
