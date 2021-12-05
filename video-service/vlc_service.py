@@ -17,7 +17,8 @@ from waitress import serve
 
 app = Flask(__name__)
 
-VERSION='1.0.0'
+VERSION='1.0.1'
+SERVICE_PORT=5000
 
 class WaitressThread(Thread):
     '''
@@ -30,7 +31,7 @@ class WaitressThread(Thread):
         self.daemon = True
 
     def run(self):
-        serve(app, host='0.0.0.0', port=5000)
+        serve(app, host='0.0.0.0', port=SERVICE_PORT)
 
 
 def error_response(path, message, status_code):
@@ -210,7 +211,7 @@ vlcInstance = vlc.Instance()
 
 media_player = vlcInstance.media_player_new()
 
-# TK stuff for windows
+# TK stuff to create a window to display video
 tkRoot = tk.Tk()
 tkRoot.configure(bg='black')
 tkRoot.wm_attributes('-fullscreen','true')
