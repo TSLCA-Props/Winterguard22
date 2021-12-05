@@ -46,6 +46,40 @@
 			"response": []
 		},
 		{
+			"name": "Set Pause",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/pause",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"pause"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Set Position time",
 			"event": [
 				{
@@ -119,46 +153,6 @@
 						{
 							"key": "percent",
 							"value": "0.90"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Set Pause",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://{{host}}:5000/api/v1/position?percent=0.5",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"position"
-					],
-					"query": [
-						{
-							"key": "percent",
-							"value": "0.5"
 						}
 					]
 				}
@@ -485,7 +479,7 @@
 							"\r",
 							"pm.test(\"Json error body\", () => {\r",
 							"  const responseJson = pm.response.json();\r",
-							"  pm.expect(responseJson.error).to.eql(\"File does not exist media\\\\xxxxx\");\r",
+							"  pm.expect(responseJson.error).to.contain(\"File does not exist media\");\r",
 							"  pm.expect(responseJson.path).to.eql('/api/v1/play');\r",
 							"});"
 						],
@@ -599,7 +593,11 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": ":5000/api/v1/position?time=01.02",
+					"raw": "http://{{host}}:5000/api/v1/position?time=01.02",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
 					"port": "5000",
 					"path": [
 						"api",
