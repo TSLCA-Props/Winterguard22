@@ -87,9 +87,11 @@ Response:
 * 200 on success
   * Json body
 ```
+{
     "file": "file:///C:/git-repo/tslc/Winterguard22/video-service/media/testvid.mov",
     "length": "0:01:50",
     "os_version": "Windows-10-10.0.19042-SP0",
+    "os":"Windows",
     "position_percent:": 0.24228182435035706,
     "position_time": "0:00:26.651000",
     "server_version": "1.0.0",
@@ -128,7 +130,7 @@ python vlc_service.py
 
 
 ___
-Python3 id required to run.  This can be done using the commons
+Python3 is required to run.  This can be done using the commands
 * `python3`
 * `pip3` OR `python3 -m pip`  to install modules.
 * VirtualEvn can be setup to localize modules

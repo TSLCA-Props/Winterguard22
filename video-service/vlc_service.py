@@ -5,16 +5,34 @@ Micro-service for VLC.
 from datetime import datetime
 from datetime import timedelta
 import os
-from platform import platform
+import  platform
+import tkinter as tk
+from threading import Thread
 import vlc
 from flask import Flask
 from flask import json
 from flask import request
+from waitress import serve
 
 
 app = Flask(__name__)
 
-VERSION='1.0.0'
+VERSION='1.0.1'
+SERVICE_PORT=5000
+
+class WaitressThread(Thread):
+    '''
+    Thread class for waitress
+    '''
+
+    def __init__(self):
+        super().__init__()
+        # Make daemon so system run forever
+        self.daemon = True
+
+    def run(self):
+        serve(app, host='0.0.0.0', port=SERVICE_PORT)
+
 
 def error_response(path, message, status_code):
     '''
@@ -167,9 +185,11 @@ def status():
 
         resp = app.response_class(
             response=json.dumps(
-                {   'server_version': VERSION,
+                {
+                    'server_version': VERSION,
                     'vlc_version': str(vlc.libvlc_get_version()),
-                    'os_version': str(platform()),
+                    'os_version': str(platform.platform()),
+                    'os': platform.system(),
                     'state': state,
                     'file': file,
                     'position_percent:': current_position,
@@ -190,8 +210,22 @@ vlcInstance = vlc.Instance()
 #vlcInstane = vlc.Instance('--video-on-top')
 
 media_player = vlcInstance.media_player_new()
+
+# TK stuff to create a window to display video
+tkRoot = tk.Tk()
+tkRoot.configure(bg='black')
+tkRoot.wm_attributes('-fullscreen','true')
+
+if platform.system() == 'Linux':
+    media_player.set_xwindow(tkRoot.winfo_id())
+elif platform.system() == 'Windows':
+    media_player.set_hwnd(tkRoot.winfo_id())
+
 media_player.toggle_fullscreen()
 
 if __name__ == '__main__':
-    from waitress import serve
-    serve(app, host='0.0.0.0', port=5000)
+    # Run waitress in it own thread so TK can be in the main
+    waitressThread = WaitressThread()
+    waitressThread.start()
+
+    tkRoot.mainloop()

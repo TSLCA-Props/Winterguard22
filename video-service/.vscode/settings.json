@@ -2,11 +2,15 @@
     "python.linting.enabled": true,
     "cSpell.words": [
         "banksy",
+        "hwnd",
         "libvlc",
+        "prerequest",
         "testvid",
         "tslc",
         "Vetinari",
-        "Winterguard"
+        "winfo",
+        "Winterguard",
+        "xwindow"
     ],
     "python.linting.pylintEnabled": true
 }
