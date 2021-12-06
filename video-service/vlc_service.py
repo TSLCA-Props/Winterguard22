@@ -2,6 +2,7 @@
 '''
 Micro-service for VLC.
 '''
+import ctypes
 from datetime import datetime
 from datetime import timedelta
 import os
@@ -211,6 +212,12 @@ vlcInstance = vlc.Instance()
 #vlcInstane = vlc.Instance('--video-on-top')
 
 media_player = vlcInstance.media_player_new()
+
+# Make sure XInitThreads is called before any Xlib commands
+if platform.system() == 'Linux':
+    x11 = ctypes.CDLL('libX11.so')
+    x11.XInitThreads()
+
 
 # TK stuff to create a window to display video
 tkRoot = tk.Tk()
