@@ -19,7 +19,7 @@ from waitress import serve
 
 app = Flask(__name__)
 
-VERSION='1.0.4'
+VERSION='1.0.5x'
 SERVICE_PORT=5000
 
 class WaitressThread(Thread):
@@ -47,8 +47,18 @@ def error_response(path, message, status_code):
 def play():
     '''
     Play a media file.
+    url parameters:
+        - file: media file to play
+        - start: start video on load, true or false.  Default is true.
     '''
     try:
+        # test for valid parameters
+        valid_params = ['file', 'start']
+        params = request.args
+        for param in params:
+            if param not in valid_params:
+                return error_response(request.path, 'Unknown parameter: ' + param, 400)
+
         media_file_arg =  request.args.get('file')
         if media_file_arg is None:
             return error_response(request.path, 'No file name provided', 400)
@@ -57,7 +67,21 @@ def play():
         if not os.path.isfile(media_file_name):
             return error_response(request.path, 'File does not exist ' + media_file_name, 400)
 
-        media_player.set_media(vlcInstance.media_new(media_file_name))
+        start_video = True
+        if 'start' in request.args:
+            if request.args.get('start') == 'true':
+                start_video = True
+            elif request.args.get('start') == 'false':
+                start_video = False
+            else:
+                status_msg = 'start parameter must be equal true or false.  Input was {0}'
+                return error_response(request.path,status_msg.format(request.args.get('start')),400)
+
+        media_input = vlcInstance.media_new(media_file_name)
+        if not start_video:
+            media_input.add_option(':start-paused')
+
+        media_player.set_media(media_input)
         media_player.set_fullscreen(True)
         media_player.play()
         return ('',200)
@@ -69,8 +93,18 @@ def play():
 def position():
     '''
     Play a media file at a specific position.
+    url parameters:
+        - percent: position in percent to play
+        - time: position in time to play
     '''
     try:
+        # test for valid parameters
+        valid_params = ['percent', 'time']
+        params = request.args
+        for param in params:
+            if param not in valid_params:
+                return error_response(request.path, 'Unknown parameter: ' + param, 400)
+
         position_arg =  request.args.get('percent')
         timedelta_arg = request.args.get('time')
         if position_arg is None and timedelta_arg is None:
