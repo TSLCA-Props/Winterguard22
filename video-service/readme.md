@@ -20,7 +20,16 @@ ___
 
 `POST /api/v1/play?file=[media file name]`
 
+`POST /api/v1/play?file=[media file name]&start=true`
+
+`POST /api/v1/play?file=[media file name]&start=false`
+
 Play a media file in VLC. Use the `list` api to see a list of media files on the server.
+
+Parameters:
+
+* `file` - (Required) Media file to play.  The available files are found using the `list` request in the api.
+* `start` - (Optional) true or false, when false video starts in paused state, use the `pause` api start start playing. **Default:** true.
 
 Response:
 

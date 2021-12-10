@@ -194,6 +194,44 @@
 			"response": []
 		},
 		{
+			"name": "List media files",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Array has more zero values\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.greaterThan(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/list",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get VLC Status",
 			"event": [
 				{
@@ -233,44 +271,6 @@
 						"api",
 						"v1",
 						"status"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "List media files",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Array has more zero values\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.length).to.greaterThan(0);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{host}}:5000/api/v1/list",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"v1",
-						"list"
 					]
 				}
 			},
@@ -357,28 +357,14 @@
 			"response": []
 		},
 		{
-			"name": "Play failure -- wrong parameter",
+			"name": "Play banksy022.jpg - start=true",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 400\", function () {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Content-Type header is present\", () => {\r",
-							"  pm.response.to.have.header(\"Content-Type\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Content-Type header is application/json\", () => {\r",
-							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Json error body\", () => {\r",
-							"  const responseJson = pm.response.json();\r",
-							"  pm.expect(responseJson.error).to.eql(\"No file name provided\");\r",
-							"  pm.expect(responseJson.path).to.eql('/api/v1/play');\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -389,7 +375,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://{{host}}:5000/api/v1/play?media=xxxxxx",
+					"raw": "http://{{host}}:5000/api/v1/play?file=banksy022.jpg&start=true",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -402,8 +388,56 @@
 					],
 					"query": [
 						{
-							"key": "media",
-							"value": "xxxxxx"
+							"key": "file",
+							"value": "banksy022.jpg"
+						},
+						{
+							"key": "start",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play banksy022.jpg - start=false",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/play?file=banksy022.jpg&start=false",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"play"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "banksy022.jpg"
+						},
+						{
+							"key": "start",
+							"value": "false"
 						}
 					]
 				}
@@ -770,6 +804,176 @@
 						{
 							"key": "percent",
 							"value": "-0.1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Position failure-- unknown parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"Unknown parameter: something\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/position');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/position?something=xxx",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"position"
+					],
+					"query": [
+						{
+							"key": "something",
+							"value": "xxx"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play failure - Unknown parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"Unknown parameter: something\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/play');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/play?file=banksy001.gif&something=xxx",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"play"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "banksy001.gif"
+						},
+						{
+							"key": "something",
+							"value": "xxx"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Play failure - bad start value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Json error body\", () => {\r",
+							"  const responseJson = pm.response.json();\r",
+							"  pm.expect(responseJson.error).to.eql(\"start parameter must be equal true or false.  Input was xxx\");\r",
+							"  pm.expect(responseJson.path).to.eql('/api/v1/play');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}:5000/api/v1/play?file=banksy001.gif&start=xxx",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"play"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "banksy001.gif"
+						},
+						{
+							"key": "start",
+							"value": "xxx"
 						}
 					]
 				}
