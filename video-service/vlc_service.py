@@ -270,4 +270,5 @@ if __name__ == '__main__':
     waitressThread = WaitressThread()
     waitressThread.start()
 
+    tkRoot.configure(cursor='none')
     tkRoot.mainloop()
