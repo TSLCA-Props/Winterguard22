@@ -182,6 +182,23 @@ def list_media():
         return error_response(request.path,  str(ex), 500)
 
 
+@app.route('/api/v1/snapshot', methods=['GET'])
+def take_snapshot():
+    '''
+    Snapshot the current video frame.
+    '''
+    try:
+        media_player.video_take_snapshot(0, 'snapshot.png', 0, 0)
+        png_file = open('snapshot.png', 'rb').read()
+        resp = app.response_class(
+            response=png_file,
+            status=200,
+            mimetype='image/png'
+        )
+        return resp
+    except Exception as ex:
+        return error_response(request.path,  str(ex), 500)
+
 @app.route('/api/v1/status', methods=['GET'])
 def status():
     '''
