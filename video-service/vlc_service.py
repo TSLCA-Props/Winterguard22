@@ -189,7 +189,8 @@ def take_snapshot():
     '''
     try:
         media_player.video_take_snapshot(0, 'snapshot.png', 0, 0)
-        png_file = open('snapshot.png', 'rb').read()
+        with open('snapshot.png', 'rb') as f:
+            png_file = f.read()
         resp = app.response_class(
             response=png_file,
             status=200,
