@@ -19,7 +19,7 @@ from waitress import serve
 
 app = Flask(__name__)
 
-VERSION='1.0.6x'
+VERSION='1.0.7'
 SERVICE_PORT=5000
 
 class WaitressThread(Thread):
@@ -118,7 +118,7 @@ def position():
 
         position_value = 0.0
         if timedelta_arg is not None:
-            time_d = datetime.strptime(timedelta_arg,"%H:%M:%S.%snaps")
+            time_d = datetime.strptime(timedelta_arg,"%H:%M:%S.%f")
             time_position = timedelta(  hours=time_d.hour,
                                         minutes=time_d.minute,
                                         seconds=time_d.second,
