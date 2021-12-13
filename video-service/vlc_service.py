@@ -118,7 +118,7 @@ def position():
 
         position_value = 0.0
         if timedelta_arg is not None:
-            time_d = datetime.strptime(timedelta_arg,"%H:%M:%S.%f")
+            time_d = datetime.strptime(timedelta_arg,"%H:%M:%S.%snaps")
             time_position = timedelta(  hours=time_d.hour,
                                         minutes=time_d.minute,
                                         seconds=time_d.second,
@@ -189,10 +189,10 @@ def take_snapshot():
     '''
     try:
         media_player.video_take_snapshot(0, 'snapshot.png', 0, 0)
-        with open('snapshot.png', 'rb') as f:
-            png_file = f.read()
+        with open('snapshot.png', 'rb') as snapshot_file:
+            png_data = snapshot_file.read()
         resp = app.response_class(
-            response=png_file,
+            response=png_data,
             status=200,
             mimetype='image/png'
         )
