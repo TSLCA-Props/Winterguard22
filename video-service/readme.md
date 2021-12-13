@@ -154,6 +154,21 @@ Response:
 ___
 ___
 
+### Snapshot
+
+`GET /api/v1/snapshot`
+
+Return a snapshot image of the current video
+
+Response:
+
+* 200 on success
+  * image/png body
+* otherwise error code with description in the body
+  
+___
+___
+
 ## Running
 
 ```bash

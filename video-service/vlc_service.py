@@ -19,7 +19,7 @@ from waitress import serve
 
 app = Flask(__name__)
 
-VERSION='1.0.5'
+VERSION='1.0.6x'
 SERVICE_PORT=5000
 
 class WaitressThread(Thread):
@@ -118,7 +118,7 @@ def position():
 
         position_value = 0.0
         if timedelta_arg is not None:
-            time_d = datetime.strptime(timedelta_arg,"%H:%M:%S.%f")
+            time_d = datetime.strptime(timedelta_arg,"%H:%M:%S.%snaps")
             time_position = timedelta(  hours=time_d.hour,
                                         minutes=time_d.minute,
                                         seconds=time_d.second,
@@ -181,6 +181,24 @@ def list_media():
     except Exception as ex:
         return error_response(request.path,  str(ex), 500)
 
+
+@app.route('/api/v1/snapshot', methods=['GET'])
+def take_snapshot():
+    '''
+    Snapshot the current video frame.
+    '''
+    try:
+        media_player.video_take_snapshot(0, 'snapshot.png', 0, 0)
+        with open('snapshot.png', 'rb') as snapshot_file:
+            png_data = snapshot_file.read()
+        resp = app.response_class(
+            response=png_data,
+            status=200,
+            mimetype='image/png'
+        )
+        return resp
+    except Exception as ex:
+        return error_response(request.path,  str(ex), 500)
 
 @app.route('/api/v1/status', methods=['GET'])
 def status():
