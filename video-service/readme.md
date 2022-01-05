@@ -205,6 +205,9 @@ ___
   * [Linux install](https://www.videolan.org/vlc/download-debian.html) -  `sudo apt install vlc`
   * [Windows Install](https://www.videolan.org/vlc/download-windows.html) - download installer
 
+* [libX11](https://gitlab.freedesktop.org/xorg/lib/libx11) = `sudo apt-get install libX11-dev`
+  * Linux Bullseye (only?), required for tinker interface.
+
 * [Visual Studio Code](https://code.visualstudio.com/) (optional)
   * [Python Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
   * [GitHub Repositories](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub) -- Or some other git extension

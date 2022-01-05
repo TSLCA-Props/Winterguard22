@@ -12,7 +12,10 @@
         "winfo",
         "Winterguard",
         "Xlib",
+        "xspf",
         "xwindow"
     ],
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintCategorySeverity.refactor": "Warning",
+    "python.linting.pylintCategorySeverity.convention": "Warning",
 }
