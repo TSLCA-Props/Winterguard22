@@ -12,7 +12,7 @@ Desktop Apps/Scripts can be started after the GUI desktop and the default user i
     * `chmod a+rwx [script name]`
     * Make sure script file start with
     * `!#/usr/bin`
-* An example of a startup script can be found in `../config`
+* An example of a startup script can be found in `../scripts`
 
 ## References
 * [STICKY: How to use Autostart - Raspberry Pi (OS Desktop)](https://forums.raspberrypi.com/viewtopic.php?t=294014)
