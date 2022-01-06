@@ -1,0 +1,4 @@
+@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
+@xscreensaver -no-splash
+@lxterminal -e /home/pi/tslca/WinterGuard22/scripts/start-video-service.sh
