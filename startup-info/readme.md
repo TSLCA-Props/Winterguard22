@@ -11,7 +11,7 @@ Desktop Apps/Scripts can be started after the GUI desktop and the default user i
   * Any scripts will need to be executable
     * `chmod a+rwx [script name]`
     * Make sure script file start with
-    * `!#/usr/bin`
+    * `#!/usr/bin`
 * An example of a startup script can be found in `../scripts`
 
 ## References
