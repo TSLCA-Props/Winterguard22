@@ -8,7 +8,7 @@ The video service is a rest api micro-service wrapping the VLC media player.
 
 ## Scripts
 
-Sample script file for startup vlc_service with vitual environment
+Sample script file for starting vlc_service with virtual environment
 
 ## startup-info
 
