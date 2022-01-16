@@ -14,12 +14,13 @@ from flask import Flask
 from flask import json
 from flask import request
 from flask import make_response
+from flask import Response
 from waitress import serve
 
 
 app = Flask(__name__)
 
-VERSION='1.0.7'
+VERSION='1.0.8X'
 SERVICE_PORT=5000
 
 class WaitressThread(Thread):
@@ -36,7 +37,7 @@ class WaitressThread(Thread):
         serve(app, host='0.0.0.0', port=SERVICE_PORT)
 
 
-def error_response(path, message, status_code):
+def error_response(path : str, message: str, status_code : int) -> Response:
     '''
     Return a JSON response with an error message.
     '''
@@ -44,7 +45,7 @@ def error_response(path, message, status_code):
 
 
 @app.route('/api/v1/play', methods=['POST'])
-def play():
+def play() -> Response:
     '''
     Play a media file.
     url parameters:
@@ -90,7 +91,7 @@ def play():
 
 
 @app.route('/api/v1/position', methods=['POST'])
-def position():
+def position() -> Response:
     '''
     Play a media file at a specific position.
     url parameters:
@@ -141,7 +142,7 @@ def position():
         return error_response(request.path, str(ex), 500)
 
 @app.route('/api/v1/pause', methods=['POST'])
-def pause_resume():
+def pause_resume() -> Response:
     '''
     Pause the media file. Resume if already paused.
     '''
@@ -154,7 +155,7 @@ def pause_resume():
 
 
 @app.route('/api/v1/stop', methods=['POST'])
-def stop():
+def stop() -> Response:
     '''
     Stop the media player.
     '''
@@ -166,7 +167,7 @@ def stop():
 
 
 @app.route('/api/v1/list', methods=['GET'])
-def list_media():
+def list_media() -> Response:
     '''
     List all available media files.
     '''
@@ -183,7 +184,7 @@ def list_media():
 
 
 @app.route('/api/v1/snapshot', methods=['GET'])
-def take_snapshot():
+def take_snapshot() -> Response:
     '''
     Snapshot the current video frame.
     '''
@@ -201,7 +202,7 @@ def take_snapshot():
         return error_response(request.path,  str(ex), 500)
 
 @app.route('/api/v1/status', methods=['GET'])
-def status():
+def status() -> Response:
     '''
     Get the current status of the media player.
     '''
@@ -261,7 +262,7 @@ def status():
 vlcInstance = vlc.Instance()
 
 # don't run on top when debugging
-#vlcInstane = vlc.Instance('--video-on-top')
+#vlcInstance = vlc.Instance('--video-on-top')
 
 media_player = vlcInstance.media_player_new()
 
@@ -275,11 +276,14 @@ if platform.system() == 'Linux':
 tkRoot = tk.Tk()
 tkRoot.configure(bg='black')
 tkRoot.wm_attributes('-fullscreen','true')
+main_frame = tk.Frame(tkRoot)
+main_frame.config(background='black', cursor='none')
+main_frame.pack(fill=tk.BOTH, expand=tk.TRUE)
 
 if platform.system() == 'Linux':
-    media_player.set_xwindow(tkRoot.winfo_id())
+    media_player.set_xwindow(main_frame.winfo_id())
 elif platform.system() == 'Windows':
-    media_player.set_hwnd(tkRoot.winfo_id())
+    media_player.set_hwnd(main_frame.winfo_id())
 
 media_player.toggle_fullscreen()
 
