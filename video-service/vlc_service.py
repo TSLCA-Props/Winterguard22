@@ -20,7 +20,7 @@ from waitress import serve
 
 app = Flask(__name__)
 
-VERSION='1.0.8X'
+VERSION='1.0.9'
 SERVICE_PORT=5000
 
 class WaitressThread(Thread):
