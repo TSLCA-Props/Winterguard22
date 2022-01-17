@@ -47,7 +47,7 @@ Also on the same menu, change the `GL Driver`
 
 ### config.txt
 
-The raspberry PI does not drive video output if the TV (HDMI device) is not on during power up.  This can be forced by adding the following lines to the `/boot/config.txt` file.
+The raspberry PI does not drive video output if the TV (HDMI device) is not on during power up.  This can be forced by adding the following lines to the `/boot/config.txt` file. The output will be set 1080p 60Hz.
 
 ```text
 hdmi_force_hotplug=1
