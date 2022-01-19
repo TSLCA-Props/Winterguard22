@@ -39,26 +39,11 @@ The PI 3 required the `Glamor` option for hardware acceleration.
 
 ![Advanced Options](raspi-config-advanced.png "Advanced Options")
 
-Also on the same menu, change the `GL Driver`
+Also on the same menu, change the `GL Driver` to `Legacy`
 
 ![Graphics Driver](raspi-config-graphics-driver.png "Graphics Driver")
 
 ## Other Configuration
-
-### config.txt
-
-The raspberry PI does not drive video output if the TV (HDMI device) is not on during power up.  This can be forced by adding the following lines to the `/boot/config.txt` file. The output will be set 1080p 60Hz.
-
-```text
-hdmi_force_hotplug=1
-hdmi_group=1
-hdmi_mode=16
-```
-
-**Note:** The key are already in the config.txt file.
-They just need to be uncommented and the correct value added.
-
-See: [Documentation config.txt: HDMI Mode](https://www.raspberrypi.com/documentation/computers/config_txt.html#hdmi-mode)
 
 ## Desktop Setup
 
