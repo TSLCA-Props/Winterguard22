@@ -17,6 +17,9 @@ from flask import make_response
 from flask import Response
 from waitress import serve
 
+if platform.system() == 'Linux':
+    import cec
+
 
 app = Flask(__name__)
 
@@ -249,7 +252,10 @@ def status() -> Response:
                     'file': file,
                     'position_percent:': current_position,
                     'position_time': time_position,
-                    'length' : media_length
+                    'length' : media_length,
+                    'hdmi_active' : tv.is_active(),
+                    'hdmi_on' : tv.is_on(),
+                    'hdmi_vendor' : tv.vendor
                 }),
             status=200,
             mimetype='application/json'
@@ -257,6 +263,40 @@ def status() -> Response:
         return resp
     except Exception as ex:
         return error_response(request.path,  str(ex), 500)
+
+@app.route('/api/v1/hdmi', methods=['POST'])
+def hdmi() -> Response:
+    '''
+    Turn tv on
+    url parameters:
+        - mode  : on -- turn on, standbay -- turn off
+    '''
+    if platform.system() != 'Linux':
+        return error_response(request.path, 'hdmi mode only availabe on linux.', 400)
+
+    try:
+        # test for valid parameters
+        valid_params = ['mode']
+        params = request.args
+        for param in params:
+            if param not in valid_params:
+                return error_response(request.path, f'Unknown parameter: {param}', 400)
+
+        hdmi_mode =  request.args.get('mode')
+        if hdmi_mode is None:
+            return error_response(request.path, 'No mode provided', 400)
+
+        if hdmi_mode == 'on':
+            tv.power_on()
+        elif hdmi_mode == 'standby':
+            tv.standby()
+        else:
+            return error_response(request.path, f'Invalid hdmi mode {hdmi_mode}', 400)
+        
+        return '',200
+    except Exception as ex:
+        return error_response(request.path,  str(ex), 500)
+
 
 # creating vlc media player object
 vlcInstance = vlc.Instance()
@@ -270,7 +310,9 @@ media_player = vlcInstance.media_player_new()
 if platform.system() == 'Linux':
     x11 = ctypes.CDLL('libX11.so')
     x11.XInitThreads()
-
+    # Initialize cec interface
+    cec.init()
+    tv = cec.Device(cec.CECDEVICE_TV)
 
 # TK stuff to create a window to display video
 tkRoot = tk.Tk()
