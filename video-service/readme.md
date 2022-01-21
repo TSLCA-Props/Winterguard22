@@ -15,6 +15,25 @@ http://xxx.xxx.xxx.xxx:5000/api/v1/list
 ## API
 
 ___
+___
+
+### hdmi
+
+`POST /api/v1/hdmi?mode=on`
+
+`POST /api/v1/hdmi?mode=standby`
+
+Interface to the hdmi cec interface to turn the tv `on` or 
+put in int `standby` mode.  There is a new status `hdmi_on` which will be true when the hdmi interface is active.
+
+**Note:** This feature only works in Linux on a raspberry pi.
+
+Response:
+
+* 200 on success
+* otherwise error code with description in the body
+___
+___
 
 ### Play
 
@@ -187,6 +206,7 @@ ___
   * [python-vlc](https://pypi.org/project/python-vlc/)
   * [flask](https://pypi.org/project/Flask/)
   * [waitress](https://pypi.org/project/waitress/)
+  * [cec](https://pypi.org/project/cec/)
 
 > Python3 is required to run.  This can be done using the commands
 >
@@ -207,6 +227,8 @@ ___
 
 * [libX11](https://gitlab.freedesktop.org/xorg/lib/libx11) = `sudo apt-get install libX11-dev`
   * Linux Bullseye (only?), required for tinker interface.
+
+* [libcec-dev](https://pypi.org/project/cec/) `sudo apt-get install libcec-dev build-essential python-dev`
 
 * [Visual Studio Code](https://code.visualstudio.com/) (optional)
   * [Python Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)

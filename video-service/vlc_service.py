@@ -23,7 +23,7 @@ if platform.system() == 'Linux':
 
 app = Flask(__name__)
 
-VERSION='1.0.9'
+VERSION='1.0.10x'
 SERVICE_PORT=5000
 
 class WaitressThread(Thread):
@@ -241,6 +241,13 @@ def status() -> Response:
             time_position = str(timedelta(milliseconds=media_player.get_time()))
             media_length = str(timedelta(milliseconds=media_player.get_media().get_duration()))
 
+        try:
+            hdmi_on = tv.is_on()
+            hdmi_active = tv.is_active()
+        except Exception as ex_hdmi:
+            hdmi_on = str(ex_hdmi)
+            hdmi_active = str(ex_hdmi)
+
         resp = app.response_class(
             response=json.dumps(
                 {
@@ -253,9 +260,8 @@ def status() -> Response:
                     'position_percent:': current_position,
                     'position_time': time_position,
                     'length' : media_length,
-                    'hdmi_active' : tv.is_active(),
-                    'hdmi_on' : tv.is_on(),
-                    'hdmi_vendor' : tv.vendor
+                    'hdmi_active' : hdmi_active,
+                    'hdmi_on' : hdmi_on
                 }),
             status=200,
             mimetype='application/json'
@@ -292,7 +298,7 @@ def hdmi() -> Response:
             tv.standby()
         else:
             return error_response(request.path, f'Invalid hdmi mode {hdmi_mode}', 400)
-        
+
         return '',200
     except Exception as ex:
         return error_response(request.path,  str(ex), 500)
