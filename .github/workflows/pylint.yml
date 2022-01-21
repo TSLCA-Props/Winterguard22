@@ -17,7 +17,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint python-vlc flask waitress cec
+        pip install pylint python-vlc flask waitress
     - name: Analysing the code with pylint
       run: |
         pylint $(find . -name "*.py" | xargs)
