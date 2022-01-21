@@ -18,7 +18,7 @@ from flask import Response
 from waitress import serve
 
 if platform.system() == 'Linux':
-    import cec
+    import cec      # pylint: disable=import-error
 
 
 app = Flask(__name__)
