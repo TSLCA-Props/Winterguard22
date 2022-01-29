@@ -14,6 +14,11 @@ Desktop Apps/Scripts can be started after the GUI desktop and the default user i
     * `#!/usr/bin`
 * An example of a startup script can be found in `../scripts`
 
+## Desktop wall paper
+
+* An example of setting the desktop wallpaper (`TSLCA Colorguard`) can be found in
+`.config/pcmanfm/LXDE/desktop-items-0.conf`
+
 ## References
 * [STICKY: How to use Autostart - Raspberry Pi (OS Desktop)](https://forums.raspberrypi.com/viewtopic.php?t=294014)
 * [LXDE Autostart](https://wiki.archlinux.org/title/LXDE#Autostart)
