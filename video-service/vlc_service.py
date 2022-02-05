@@ -327,8 +327,8 @@ if platform.system() == 'Linux':
     # try tuning on the tv at startup.
     try:
         tv.power_on()
-    except Exception as ex:
-        print(f'Exception turning on TV {str(ex)}')
+    except Exception as ex_tv:
+        print(f'Exception turning on TV {str(ex_tv)}')
 
 
 # TK stuff to create a window to display video
