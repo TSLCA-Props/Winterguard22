@@ -208,7 +208,7 @@ ___
   * [python-vlc (3.0.*)](https://pypi.org/project/python-vlc/)
   * [flask (2.0.*)](https://pypi.org/project/Flask/)
   * [waitress (2.0.*)](https://pypi.org/project/waitress/)
-  * [cec (0.2.8)](https://pypi.org/project/cec/)
+  * [cec (0.2.*)](https://pypi.org/project/cec/)
 
 > Python3 is required to run.  This can be done using the commands
 >
