@@ -304,8 +304,8 @@ def hdmi() -> Response:
             return error_response(request.path, f'Invalid hdmi mode {hdmi_mode}', 400)
 
         return '',200
-    except Exception as ex_tv:
-        return error_response(request.path,  str(ex_tv), 500)
+    except Exception as ex_hdmi:
+        return error_response(request.path,  str(ex_hdmi), 500)
 
 
 # creating vlc media player object
