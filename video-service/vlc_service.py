@@ -23,7 +23,7 @@ if platform.system() == 'Linux':
 
 app = Flask(__name__)
 
-VERSION='1.0.10x'
+VERSION='1.0.11x'
 SERVICE_PORT=5000
 
 class WaitressThread(Thread):
