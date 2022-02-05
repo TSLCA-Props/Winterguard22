@@ -6,7 +6,11 @@ This repo contain projects for the TSLCA Winter Guard Props
 
 The video service is a rest api micro-service wrapping the VLC media player.
 
-## Scripts
+## [Raspberry Pi 3 configuration notes](pi-config/readme.md)
+
+Configuration setting for the Raspberry PI 3
+
+## [Scripts](scripts/)
 
 Sample script file for starting vlc_service with virtual environment
 
