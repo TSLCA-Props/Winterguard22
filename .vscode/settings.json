@@ -5,7 +5,11 @@
         "hotplug",
         "hwnd",
         "libvlc",
+        "LXDE",
+        "lxsession",
+        "pcmanfm",
         "raspi",
+        "TSLCA",
         "winfo",
         "Xlib",
         "xwindow"
