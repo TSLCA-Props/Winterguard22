@@ -324,6 +324,13 @@ if platform.system() == 'Linux':
     cec.init()
     tv = cec.Device(cec.CECDEVICE_TV)
 
+    # try tuning on the tv at startup.
+    try:
+        tv.power_on()
+    except Exception as ex:
+        print(f'Exception turning on TV {str(ex)}')
+
+
 # TK stuff to create a window to display video
 tkRoot = tk.Tk()
 tkRoot.configure(bg='black')

@@ -203,10 +203,10 @@ ___
 
 * [Python](https://www.python.org/downloads/) 3.7 and above
 * Pip Modules
-  * [python-vlc](https://pypi.org/project/python-vlc/)
-  * [flask](https://pypi.org/project/Flask/)
-  * [waitress](https://pypi.org/project/waitress/)
-  * [cec](https://pypi.org/project/cec/)
+  * [python-vlc (3.0.*)](https://pypi.org/project/python-vlc/)
+  * [flask (2.0.*)](https://pypi.org/project/Flask/)
+  * [waitress (2.0.*)](https://pypi.org/project/waitress/)
+  * [cec (0.2.8)](https://pypi.org/project/cec/)
 
 > Python3 is required to run.  This can be done using the commands
 >
@@ -225,10 +225,10 @@ ___
   * [Linux install](https://www.videolan.org/vlc/download-debian.html) -  `sudo apt install vlc`
   * [Windows Install](https://www.videolan.org/vlc/download-windows.html) - download installer
 
-* [libX11](https://gitlab.freedesktop.org/xorg/lib/libx11) = `sudo apt-get install libX11-dev`
+* [libX11](https://gitlab.freedesktop.org/xorg/lib/libx11) = `sudo apt-get install libx11-dev`
   * Linux Bullseye (only?), required for tinker interface.
 
-* [libcec-dev](https://pypi.org/project/cec/) `sudo apt-get install libcec-dev build-essential python-dev`
+* [libcec-dev](https://pypi.org/project/cec/) `sudo apt-get install libcec-dev`
 
 * [Visual Studio Code](https://code.visualstudio.com/) (optional)
   * [Python Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
