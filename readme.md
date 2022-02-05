@@ -10,8 +10,6 @@ The video service is a rest api micro-service wrapping the VLC media player.
 
 Sample script file for starting vlc_service with virtual environment
 
-## startup-info
+## [startup-info](startup-info/readme.md)
 
 Information on how to autostart a desktop add at boot/login time. See the [readme.md](startup-info/readme.md) a sample autostart script the `pi` user.
-
-

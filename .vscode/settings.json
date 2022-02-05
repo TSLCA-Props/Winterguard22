@@ -6,6 +6,7 @@
         "hwnd",
         "libvlc",
         "raspi",
+        "TSLCA",
         "winfo",
         "Xlib",
         "xwindow"
