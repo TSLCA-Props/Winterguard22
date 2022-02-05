@@ -81,16 +81,20 @@ def play() -> Response:
                 status_msg = 'start parameter must be equal true or false.  Input was {0}'
                 return error_response(request.path,status_msg.format(request.args.get('start')),400)
 
-        media_input = vlcInstance.media_new(media_file_name)
-        if not start_video:
-            media_input.add_option(':start-paused')
-
-        media_player.set_media(media_input)
-        media_player.set_fullscreen(True)
-        media_player.play()
+        play_media_file(media_file_name, start_video)
         return ('',200)
     except Exception as ex:
         return error_response(request.path, str(ex), 500)
+
+def play_media_file(media_file_name : str, start_video : bool) -> None:
+    """ Play media file """
+    media_input = vlcInstance.media_new(media_file_name)
+    if not start_video:
+        media_input.add_option(':start-paused')
+
+    media_player.set_media(media_input)
+    media_player.set_fullscreen(True)
+    media_player.play()
 
 
 @app.route('/api/v1/position', methods=['POST'])
@@ -334,6 +338,14 @@ elif platform.system() == 'Windows':
     media_player.set_hwnd(main_frame.winfo_id())
 
 media_player.toggle_fullscreen()
+
+# load the default image
+try:
+    startup_media_file_name = os.path.join('media', 'tarpon_TV_scaled_1920.png')
+    play_media_file(startup_media_file_name, True)
+except Exception as startup_ex:
+    print(str(startup_ex))
+
 
 if __name__ == '__main__':
     # Run waitress in it own thread so TK can be in the main
