@@ -1103,7 +1103,7 @@
 			"response": []
 		},
 		{
-			"name": "hdmi missig query parameter",
+			"name": "hdmi missing query parameter",
 			"event": [
 				{
 					"listen": "test",
@@ -1151,7 +1151,7 @@
 			"response": []
 		},
 		{
-			"name": "hdmi missig query bad parameter",
+			"name": "hdmi missing query bad parameter",
 			"event": [
 				{
 					"listen": "test",

@@ -23,8 +23,9 @@ ___
 
 `POST /api/v1/hdmi?mode=standby`
 
-Interface to the hdmi cec interface to turn the tv `on` or 
-put in int `standby` mode.  There is a new status `hdmi_on` which will be true when the hdmi interface is active.
+Interface to the hdmi cec interface to turn the tv `on` or
+put in int `standby` mode.  There is a new status `hdmi_on`
+which will be true when the hdmi interface is active.
 
 **Note:** This feature only works in Linux on a raspberry pi.
 
@@ -32,6 +33,7 @@ Response:
 
 * 200 on success
 * otherwise error code with description in the body
+  
 ___
 ___
 
@@ -146,7 +148,7 @@ Response:
 
 ```json
 {
-    "file": "file:///C:/git-repo/tslc/Winterguard22/video-service/media/testvid.mov",
+    "file": "file:///C:/git-repo/tslca/Winterguard22/video-service/media/testvid.mov",
     "length": "0:01:50",
     "os_version": "Windows-10-10.0.19042-SP0",
     "os":"Windows",

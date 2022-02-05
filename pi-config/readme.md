@@ -1,5 +1,22 @@
 # Raspberry Pi 3 Config
 
+## Raspberry PI OS Version
+
+Setup SD-Card using Raspberry PI Imager Tool.
+
+* [SD-Card setup tool](https://www.raspberrypi.com/software/)
+
+![Raspberry Pi Imager](raspberry-pi-imager.png)
+
+* [Choose Debian Bullseye 32 bit with Desktop](https://www.raspberrypi.com/software/operating-systems/#raspberry-pi-os-32-bit)
+
+![Choose OS](raspberry-pi-imager-os-select.png)
+
+* Choose Storage
+  * This will be the drive letter of the USB drive with the SD-Card
+* Write
+  * Write the Raspberry PI image to the SD-Card.
+
 ## Configuration tools
 
 ```bash

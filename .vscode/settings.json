@@ -4,6 +4,7 @@
         "CDLL",
         "hotplug",
         "hwnd",
+        "Imager",
         "libvlc",
         "LXDE",
         "lxsession",
